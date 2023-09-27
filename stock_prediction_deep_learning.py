@@ -122,10 +122,10 @@ if __name__ == '__main__':
     parser.add_argument("-ticker", default="^IXIC")
     parser.add_argument("-start_date", default="1900-01-01")
     parser.add_argument("-validation_date", default="2021-09-01")
-    # parser.add_argument("-epochs", default="170")
-    parser.add_argument("-epochs", default="1")
+    parser.add_argument("-epochs", default="170")
+    # parser.add_argument("-epochs", default="1")
     parser.add_argument("-batch_size", default="50")
-    # parser.add_argument("-time_steps", default="3")
+    parser.add_argument("-load_from_csv", default="0")
     parser.add_argument("-predict_size", default="60")
     parser.add_argument("-time_steps", default="3")
     parser.add_argument("-github_url", default="https://github.com/jungsoo827/stock-prediction-2/raw/master/")
@@ -136,6 +136,7 @@ if __name__ == '__main__':
     STOCK_TICKER = args.ticker
     STOCK_START_DATE = pd.to_datetime(args.start_date)
     STOCK_VALIDATION_DATE = pd.to_datetime(args.validation_date)
+    LOAD_FROM_CSV = int(args.load_from_csv)
     EPOCHS = int(args.epochs)
     BATCH_SIZE = int(args.batch_size)
     TIME_STEPS = int(args.time_steps)
@@ -149,11 +150,12 @@ if __name__ == '__main__':
 
 
 
-    def report(input_secret, input_stock_symbol):
+    def report(input_secret, input_stock_symbol, input_load_from_csv):
 
         TOKEN = input_stock_symbol + '_' + TODAY_RUN + '_' + input_secret
         print('Test Run Folder: ' + TOKEN)
-        folder = "report/" + TODAY_RUN + '_' + input_secret + "/" + input_stock_symbol
+        stock_symbol_name = input_stock_symbol.lower().replace("^", "")
+        folder = "report/" + TODAY_RUN + '_' + input_secret + "/" + stock_symbol_name
 
         # create project run folder
         PROJECT_FOLDER = os.path.join(os.getcwd(), folder)
@@ -164,6 +166,8 @@ if __name__ == '__main__':
                                            STOCK_START_DATE,
                                            STOCK_VALIDATION_DATE,
                                            PROJECT_FOLDER,
+                                           DATASET_FOLDER,
+                                           input_load_from_csv,
                                            GITHUB_URL,
                                            EPOCHS,
                                            TIME_STEPS,
@@ -187,23 +191,27 @@ if __name__ == '__main__':
         predict_values(stock_prediction, data, model, plotter, TIME_STEPS, all_data, current_date, PREDICT_SIZE)
 
 
+    DATASET_FOLDER = os.path.join(os.getcwd(), "dataset")
+    if not os.path.exists(DATASET_FOLDER):
+        os.makedirs(DATASET_FOLDER)
+
     secret_token = secrets.token_hex(16)
-    report(secret_token, '^IXIC')  # NASDAQ
-    report(secret_token, 'AI') # C3.ai
-    report(secret_token, 'NVDA') # NVIDIA
-    report(secret_token, 'ACAD') # Acadia Pharmaceuticals
-    report(secret_token, 'TSLA') # Tesla
-    report(secret_token, 'AMZN') # Amazon
-    report(secret_token, 'AAPL') # Apple
-    report(secret_token, 'MSFT') # Microsoft
-    report(secret_token, 'GOOG') # Goole
-    report(secret_token, 'KO') # Coca Cola
-    report(secret_token, 'BTC-USD') # bitcoin
-    report(secret_token, '051900.KS') # lg생활건강
-    report(secret_token, '090430.KS') # 아모레퍼시픽
-    report(secret_token, '095700.KQ') # 제넥신
-    report(secret_token, '002310.KS') # 아세아제지
+    report(secret_token, '^IXIC', LOAD_FROM_CSV)  # NASDAQ
+    report(secret_token, 'AI', LOAD_FROM_CSV) # C3.ai
+    report(secret_token, 'NVDA', LOAD_FROM_CSV) # NVIDIA
+    report(secret_token, 'ACAD', LOAD_FROM_CSV) # Acadia Pharmaceuticals
+    report(secret_token, 'TSLA', LOAD_FROM_CSV) # Tesla
+    report(secret_token, 'AMZN', LOAD_FROM_CSV) # Amazon
+    report(secret_token, 'AAPL', LOAD_FROM_CSV) # Apple
+    report(secret_token, 'MSFT', LOAD_FROM_CSV) # Microsoft
+    report(secret_token, 'GOOG', LOAD_FROM_CSV) # Goole
+    report(secret_token, 'KO', LOAD_FROM_CSV) # Coca Cola
+    report(secret_token, 'BTC-USD', LOAD_FROM_CSV) # bitcoin
+    report(secret_token, '051900.KS', LOAD_FROM_CSV) # lg생활건강
+    report(secret_token, '090430.KS', LOAD_FROM_CSV) # 아모레퍼시픽
+    report(secret_token, '095700.KQ', LOAD_FROM_CSV) # 제넥신
+    report(secret_token, '002310.KS', LOAD_FROM_CSV) # 아세아제지
 
     # soundhound data starts at 2022-04-28
     STOCK_VALIDATION_DATE = pd.to_datetime("2023-04-01")
-    report(secret_token, 'SOUN') # Sound Hound
+    report(secret_token, 'SOUN', LOAD_FROM_CSV) # Sound Hound

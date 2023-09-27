@@ -15,11 +15,23 @@
 
 
 class StockPrediction:
-    def __init__(self, ticker, start_date, validation_date, project_folder, github_url, epochs, time_steps, token, batch_size):
+    def __init__(self, ticker,
+        start_date,
+        validation_date,
+        project_folder,
+        dataset_folder,
+        load_from_csv,
+        github_url,
+        epochs,
+        time_steps,
+        token,
+        batch_size):
         self._ticker = ticker
         self._start_date = start_date
         self._validation_date = validation_date
         self._project_folder = project_folder
+        self._dataset_folder = dataset_folder
+        self._load_from_csv = load_from_csv
         self._github_url = github_url
         self._epochs = epochs
         self._time_steps = time_steps
@@ -67,3 +79,9 @@ class StockPrediction:
 
     def get_batch_size(self):
         return self._batch_size
+
+    def get_load_from_csv(self):
+        return self._load_from_csv
+
+    def get_dataset_folder(self):
+        return self._dataset_folder

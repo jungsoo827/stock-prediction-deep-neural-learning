@@ -45,11 +45,26 @@ class StockData:
         return self._sec.info['currency']
 
     def download_transform_to_numpy(self, time_steps, project_folder):
-        end_date = datetime.today()
-        print('End Date: ' + end_date.strftime("%Y-%m-%d"))
-        data = yf.download([self._stock.get_ticker()], start=self._stock.get_start_date(), end=end_date)[['Close']]
-        data = data.reset_index()
-        data.to_csv(os.path.join(project_folder, 'downloaded_data_'+self._stock.get_ticker()+'.csv'))
+        stock_symbol_name = self._stock.get_ticker().lower().replace("^", "")
+        downloadFilename = 'downloaded_data_'+ stock_symbol_name + '.csv'
+        dataSetFilename = stock_symbol_name + '.csv'
+        if self._stock.get_load_from_csv() == 1:
+            data = pd.read_csv(os.path.join(self._stock.get_dataset_folder(), dataSetFilename))
+            data = data.reset_index()
+            print(data.dtypes)
+            data['Date'] = pd.to_datetime(data['Date'])
+            print(data.dtypes)
+            # del data[data.columns[0]]
+            print(data)
+        else:
+            end_date = datetime.today()
+            print('End Date: ' + end_date.strftime("%Y-%m-%d"))
+            data = yf.download([self._stock.get_ticker()], start=self._stock.get_start_date(), end=end_date)[['Close']]
+            data = data.reset_index()
+            print(data)
+            data.to_csv(os.path.join(project_folder, downloadFilename))
+            data.to_csv(os.path.join(self._stock.get_dataset_folder(), dataSetFilename))
+
         #print(data)
 
         all_data = data.copy()
