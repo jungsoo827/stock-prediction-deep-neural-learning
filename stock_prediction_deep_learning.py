@@ -122,8 +122,8 @@ if __name__ == '__main__':
     parser.add_argument("-ticker", default="^IXIC")
     parser.add_argument("-start_date", default="1900-01-01")
     parser.add_argument("-validation_date", default="2021-09-01")
-    parser.add_argument("-epochs", default="170")
-    # parser.add_argument("-epochs", default="1")
+    # parser.add_argument("-epochs", default="170")
+    parser.add_argument("-epochs", default="1")
     parser.add_argument("-batch_size", default="50")
     # parser.add_argument("-time_steps", default="3")
     parser.add_argument("-predict_size", default="60")
@@ -192,7 +192,6 @@ if __name__ == '__main__':
     report(secret_token, 'AI') # C3.ai
     report(secret_token, 'NVDA') # NVIDIA
     report(secret_token, 'ACAD') # Acadia Pharmaceuticals
-    report(secret_token, 'SOUN') # Sound Hound
     report(secret_token, 'TSLA') # Tesla
     report(secret_token, 'AMZN') # Amazon
     report(secret_token, 'AAPL') # Apple
@@ -204,3 +203,7 @@ if __name__ == '__main__':
     report(secret_token, '090430.KS') # 아모레퍼시픽
     report(secret_token, '095700.KQ') # 제넥신
     report(secret_token, '002310.KS') # 아세아제지
+
+    # soundhound data starts at 2022-04-28
+    STOCK_VALIDATION_DATE = pd.to_datetime("2023-04-01")
+    report(secret_token, 'SOUN') # Sound Hound
