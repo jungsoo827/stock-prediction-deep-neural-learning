@@ -50,18 +50,26 @@ class StockData:
         dataSetFilename = stock_symbol_name + '.csv'
         if self._stock.get_load_from_csv() == 1:
             data = pd.read_csv(os.path.join(self._stock.get_dataset_folder(), dataSetFilename))
-            data = data.reset_index()
-            print(data.dtypes)
+            # print(data.dtypes)
             data['Date'] = pd.to_datetime(data['Date'])
-            print(data.dtypes)
-            # del data[data.columns[0]]
-            print(data)
+            # print(data.dtypes)
+            # print('----------------')
+            # print(data.columns[0], data.columns[1], data.columns[2])
+            # print('----------------')
+            # data = data.reset_index()
+            del data[data.columns[0]]
+            data.set_index(['Date'])
+            # print(data.dtypes)
+            # print(data)
         else:
             end_date = datetime.today()
             print('End Date: ' + end_date.strftime("%Y-%m-%d"))
             data = yf.download([self._stock.get_ticker()], start=self._stock.get_start_date(), end=end_date)[['Close']]
+            # print(data.dtypes)
+            # print(data.columns[0])
             data = data.reset_index()
-            print(data)
+            # print(data.dtypes)
+            # print(data)
             data.to_csv(os.path.join(project_folder, downloadFilename))
             data.to_csv(os.path.join(self._stock.get_dataset_folder(), dataSetFilename))
 

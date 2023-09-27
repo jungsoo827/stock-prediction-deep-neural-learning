@@ -140,7 +140,7 @@ if __name__ == '__main__':
     EPOCHS = int(args.epochs)
     BATCH_SIZE = int(args.batch_size)
     TIME_STEPS = int(args.time_steps)
-    TODAY_RUN = datetime.today().strftime("%Y%m%d")
+    TODAY_RUN = datetime.today().strftime("%Y%m%d_%H%M%S")
 
     GITHUB_URL = args.github_url
     print('Ticker: ' + STOCK_TICKER)
@@ -184,10 +184,10 @@ if __name__ == '__main__':
         next_date = next_date.replace(hour=0, minute=0, second=0, microsecond=0)
         current_date = datetime.today()
         current_date = current_date.replace(hour=0, minute=0, second=0, microsecond=0)
-        print(last_data_date, current_date, next_date)
+        # print(last_data_date, current_date, next_date)
         if next_date == current_date:
             current_date = current_date - timedelta(days=1)
-        print(current_date)
+        # print(current_date)
         predict_values(stock_prediction, data, model, plotter, TIME_STEPS, all_data, current_date, PREDICT_SIZE)
 
 
