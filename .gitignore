@@ -1,3 +1,5 @@
 
 *.pyc
 __pycache__/stock_prediction_plotter.cpython-36.pyc
+/report/
+/.idea/

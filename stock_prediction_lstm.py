@@ -29,7 +29,8 @@ class LongShortTermMemory:
         return defined_metrics
 
     def get_callback(self):
-        callback = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=3, mode='min', verbose=1)
+        #callback = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=3, mode='min', verbose=1)
+        callback = tf.keras.callbacks.EarlyStopping(monitor='val_MSE', patience=3, mode='min', verbose=1)
         return callback
 
     def create_model(self, x_train):

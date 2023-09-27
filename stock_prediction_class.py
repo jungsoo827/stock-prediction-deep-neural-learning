@@ -49,21 +49,21 @@ class StockPrediction:
 
     def set_project_folder(self, value):
         self._project_folder = value
-        
+
     def set_github_url(self, value):
         self._github_url = value
-        
+
     def get_github_url(self):
         return self._github_url
-    
+
     def get_epochs(self):
         return self._epochs
 
     def get_time_steps(self):
         return self._time_steps
-        
+
     def get_token(self):
-        return self._token     
-    
+        return self._token
+
     def get_batch_size(self):
-        return self._batch_size     
+        return self._batch_size

@@ -78,3 +78,15 @@ class Plotter:
         plt.savefig(os.path.join(self.project_folder, self.short_name.strip().replace('.', '') + '_prediction.png'))
         plt.pause(0.001)
         plt.show(block=self.blocking)
+
+    def project_plot_predictions_only(self, price_predicted, input_predict_size):
+        print("plotting only predictions")
+        plt.figure(figsize=(14, 5))
+        plt.plot(price_predicted['Close'], color='red', label='Predicted [' + self.short_name + '] price')
+        plt.xlabel('Time')
+        plt.ylabel('Price [' + self.currency + ']')
+        plt.legend()
+        plt.title('Prediction ' + str(input_predict_size))
+        plt.savefig(os.path.join(self.project_folder, self.short_name.strip().replace('.', '') + '_prediction_' + str(input_predict_size) + '.png'))
+        plt.pause(0.001)
+        plt.show(block=self.blocking)

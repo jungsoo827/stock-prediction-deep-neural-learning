@@ -52,6 +52,8 @@ class StockData:
         data.to_csv(os.path.join(project_folder, 'downloaded_data_'+self._stock.get_ticker()+'.csv'))
         #print(data)
 
+        all_data = data.copy()
+        all_data = all_data.set_index('Date')
         training_data = data[data['Date'] < self._stock.get_validation_date()].copy()
         test_data = data[data['Date'] >= self._stock.get_validation_date()].copy()
         training_data = training_data.set_index('Date')
@@ -85,7 +87,7 @@ class StockData:
 
         x_test, y_test = np.array(x_test), np.array(y_test)
         x_test = np.reshape(x_test, (x_test.shape[0], x_test.shape[1], 1))
-        return (x_train, y_train), (x_test, y_test), (training_data, test_data)
+        return (x_train, y_train), (x_test, y_test), (training_data, test_data, all_data)
 
     def __date_range(self, start_date, end_date):
         for n in range(int((end_date - start_date).days)):
